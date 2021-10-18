@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url
 from deep_learning import views as deep_learning_views
+from user import views as user_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/get_bp_predict/$', deep_learning_views.get_bp_predict),
+    url(r'^api/register/$', user_views.register),
 
 ]
