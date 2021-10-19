@@ -50,7 +50,49 @@ http://10.1.89.11:8000/api/register/
 ```
 注：
 - sex设置的可选值为 “male” 和 “female”
-- 安卓前端在获取用户输入的注册信息后，需检验各项信息是否非空，手机号格式是否正确（应为11位），同时要对密码进行加密传输
+- 安卓前端在获取用户输入的注册信息后，需检验各项信息是否非空，手机号格式是否正确（应为11位），同时要对密码进行加密后再传输。加密代码可参考如下：
+
+```
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+   /**
+     * 使用MD5算法加密字符串
+     * @param string 待加密字符串，如用户登录密码
+     * @param slat 盐值
+     * @return MD5算法加密后对应的16进制字符串，长度为32
+     */
+    public static String md5(String string, String slat) {
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+
+            // 加盐值的目的是为加大MD5破解的难度，提高安全性。
+            byte[] bytes = md5.digest((string + slat).getBytes());
+
+            String result = "";
+
+            // 将bytes数组中的每个数据转成对应16进制的字符串，方便显示
+            // 注： 若直接使用new String(byte[] b)，则得到的字符串会存在乱码
+            for (byte b : bytes) {
+                // 当byte数据向上转型为int型时，java会默认保持高位不变。
+                // 所有对于负数，转型后高24位就会全补1，造成结果错误。所以要通过& 0xff运算来将高24位置0。
+                String temp = Integer.toHexString(b & 0xff);
+
+                // 保证每个byte数据都转成两位字符串，使得最后对应的16进制字符串为长度为32
+                if (temp.length() == 1) {
+                    temp = "0" + temp;
+                }
+                result += temp;
+            }
+            return result;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+```
+另：关于MD5相关介绍可参考https://github.com/NAMZseng/Notes/blob/master/%E5%85%B6%E4%BB%96/MD5%E7%AE%97%E6%B3%95.md
 
 ### 返回值
 
