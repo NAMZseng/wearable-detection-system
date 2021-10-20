@@ -52,7 +52,7 @@ http://10.1.89.11:8000/api/register/
 - sex设置的可选值为 “male” 和 “female”
 - 安卓前端在获取用户输入的注册信息后，需检验各项信息是否非空，手机号格式是否正确（应为11位），同时要对密码进行加密后再传输。加密代码可参考如下：
 
-```
+```java
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
