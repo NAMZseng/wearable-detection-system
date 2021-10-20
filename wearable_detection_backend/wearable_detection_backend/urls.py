@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/get_bp_predict/$', deep_learning_views.get_bp_predict),
     url(r'^api/register/$', user_views.register),
+    url(r'^api/login/$', user_views.login),
 
 ]

@@ -1,5 +1,4 @@
 from django.db.models import Q
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -38,3 +37,27 @@ def register(request):
 
         # 注册成功
         return Response(0, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def login(request):
+    '''
+    用户登录
+    :param request: data域包括phone,password
+    :return: 用户信息: 账号信息正确，登录成功 -1: 账号信息错误，登录失败
+    '''
+    if request.method == 'POST':
+        phone = request.data.get('phone')
+        password = request.data.get('password')
+
+        user_set = User.objects.filter(Q(phone=phone) & Q(password=password))
+
+        if user_set.exists():
+            user = user_set[0]
+            result = {'username': user.username, 'phone': user.phone, 'sex': user.sex, 'birthday': user.birthday}
+
+            # 账号信息正确，登录成功
+            return Response(result, status=status.HTTP_200_OK)
+        else:
+            # 账号信息错误，登录失败
+            return Response(-1, status=status.HTTP_200_OK)

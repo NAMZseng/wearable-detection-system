@@ -100,3 +100,29 @@ import java.security.NoSuchAlgorithmException;
 -2：手机已被注册 <br>
 0：注册成功
 
+## 用户登录
+
+### URL
+http://10.1.89.11:8000/api/login/
+
+### 传参
+```json
+{
+  "phone":18406580000,
+  "password":"xxxx"
+}
+```
+注：用户输入的登录密码也需要进行加密后再传输，具体加密代码可参见**用户注册**部分
+
+### 返回值
+用户信息: 登录成功
+```json
+{
+  "username":"user_test",
+  "phone":"18406580000",
+  "sex":"male",
+  "birthday":"2021-07-13"
+}
+```
+
+-1: 账号信息错误，登录失败
