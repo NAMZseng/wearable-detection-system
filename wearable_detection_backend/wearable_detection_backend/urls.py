@@ -20,7 +20,8 @@ from user import views as user_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/get_bp_predict/$', deep_learning_views.get_bp_predict),
+    url(r'^api/get_bp_predict_5/$', deep_learning_views.predict_bp_pre_5s),
+    url(r'^api/get_bp_predict_1/$', deep_learning_views.predict_bp_pre_1s),
     url(r'^api/register/$', user_views.register),
     url(r'^api/login/$', user_views.login),
 
